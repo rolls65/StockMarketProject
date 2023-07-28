@@ -12,7 +12,7 @@ object StockMarketAnalysis extends App{
   Logger.getLogger("org").setLevel(Level.ERROR)
   val sparkconf = new SparkConf()
   sparkconf.set("spark.app.name", "Stock Analysis Project")
-  sparkconf.set("spark.master", "local[*]")
+  //sparkconf.set("spark.master", "local[*]")
   val spark = SparkSession.builder().config(sparkconf).getOrCreate()
   val dfstockcompanies = spark.read.option("header", true).
     option("inferSchema", true).csv(args(0))
