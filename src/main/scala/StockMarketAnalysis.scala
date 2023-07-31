@@ -69,6 +69,6 @@ object StockMarketAnalysis extends App{
   dfanalysis3.show()
   val singlePartitionDataFrame3 = dfanalysis3.coalesce(1)
   singlePartitionDataFrame3.write.mode("overwrite").format("csv").save(args(4))
-  //val plot = Vegas().withDataFrame(dfanalysis3).encodeX("trading_year + sector",Nominal).encodeY("growth",Quantitative).mark(Bar)
-  //plot.show
+  val plot = Vegas().withDataFrame(dfanalysis3).encodeX("trading_year + sector",Nominal).encodeY("growth",Quantitative).mark(Bar)
+  plot.show
 }
