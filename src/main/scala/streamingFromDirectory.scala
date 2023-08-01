@@ -13,19 +13,16 @@ object streamingFromDirectory extends App{
     .config("spark.streaming.stopGracefullyOnShutdown","true")
     .config("spark.sql.streaming.schemaInference","true").getOrCreate()
 
-  //1.Read from file source
   val stockDf = spark.readStream
     .format("json")
     .option("path","input").load()
 
 
-  // 2. process
   stockDf.createOrReplaceTempView("stockdata")
-  val completedOrders = spark.sql("select * from stockdata where headquarters = 'London'")
+  val companylocation = spark.sql("select * from stockdata where headquarters = 'London'")
 
 
-  //3.Write to the sink
-  val ordersQuery = completedOrders.writeStream
+  val query = companylocation.writeStream
     .format("json")
     .outputMode("append")
     .option("path","output")
@@ -33,5 +30,5 @@ object streamingFromDirectory extends App{
     .trigger(Trigger.ProcessingTime("30 seconds"))
     .start()
 
-  ordersQuery.awaitTermination()
+  query.awaitTermination()
 }
