@@ -39,22 +39,22 @@ df.printSchema()
     .add("low", DoubleType, true)
     .add("high", DoubleType, true)
     .add("volume", DoubleType, true)
+
   val persondf = df.selectExpr("CAST(value AS STRING)")
   val person = persondf
     .select(from_json(col("value"), schema).as("data"))
     .select("data.*")
   person.printSchema()
-  person.show(false)
+  //person.show(false)
   /**
-   * uncomment below code if you want to write it to console for testing.
+   * uncomment below code if you want to write it to console for testing.*/
 
-        df.writeStream
+  person.writeStream
         .format("console")
-        .outputMode("append")
+        .outputMode("update")
         .start()
-        .awaitTermination()*/
 
-  //spark.streams.awaitAnyTermination()
+  spark.streams.awaitAnyTermination()
   /**
    * uncomment below code if you want to write it to kafka topic.
 
