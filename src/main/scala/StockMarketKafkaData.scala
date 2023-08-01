@@ -16,7 +16,7 @@ object StockMarketKafkaData extends App{
   spark.sparkContext.setLogLevel("ERROR")
 
   val df = spark.read.format("kafka").option("kafka.bootstrap.servers","ip-172-31-13-101.eu-west-2.compute.internal:9092, ip-172-31-3-80.eu-west-2.compute.internal:9092, ip-172-31-5-217.eu-west-2.compute.internal:9092, ip-172-31-9-237.eu-west-2.compute.internal:9092").option("startingOffset","earliest").option("subscribe","stockdata").load()
-df.printSchema()
+  df.printSchema()
   //df.show(false)
   //org.apache.spark.sql.AnalysisException: Queries with streaming sources must be executed with writeStream.start();;
 

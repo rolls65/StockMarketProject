@@ -19,6 +19,8 @@ libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.7.1"
 libraryDependencies += "org.apache.spark" %% "spark-sql-kafka-0-10" % "2.4.0"
 // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
 libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.4.0"
+// https://mvnrepository.com/artifact/org.apache.spark/spark-hive
+libraryDependencies += "org.apache.spark" %% "spark-hive" % "2.4.3"
 
 lazy val root = (project in file("."))
   .settings(
