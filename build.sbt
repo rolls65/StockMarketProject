@@ -15,6 +15,10 @@ libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.31"
 libraryDependencies += "org.vegas-viz" %% "vegas-spark" % "0.3.11"
 // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client
 libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.7.1"
+// https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10
+libraryDependencies += "org.apache.spark" %% "spark-sql-kafka-0-10" % "2.4.0"
+// https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.4.0"
 
 lazy val root = (project in file("."))
   .settings(
