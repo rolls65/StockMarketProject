@@ -71,4 +71,29 @@ object StockMarketAnalysis extends App{
   singlePartitionDataFrame3.write.mode("overwrite").format("csv").save(args(4))
   //val plot = Vegas().withDataFrame(dfanalysis3).encodeX("trading_year + sector",Nominal).encodeY("growth",Quantitative).mark(Bar)
   //plot.show
+  /* dfanalysis1.write
+          .format("jdbc")
+          .option("driver", "com.mysql.cj.jdbc.Driver")
+          .option("url", "jdbc:mysql://localhost:3306/stockdb")
+          .option("dbtable", "stock_table1")
+          .option("user", "root")
+          .option("password", "123456")
+          .save()
+  dfanalysis3.write
+      .format("jdbc")
+      .option("driver", "com.mysql.cj.jdbc.Driver")
+      .option("url", "jdbc:mysql://localhost:3306/stockdb")
+      .option("dbtable", "stock_table3")
+      .option("user", "root")
+      .option("password", "123456")
+      .save()
+     dfanalysis2.write
+        .format("jdbc")
+        .option("driver", "com.mysql.cj.jdbc.Driver")
+        .option("url", "jdbc:mysql://localhost:3306/stockdb")
+        .option("dbtable", "stock_table2")
+        .option("user", "root")
+        .option("password", "123456")
+        .save() */
+
 }
