@@ -22,7 +22,7 @@ object StockMarketKafkaData extends App{
     .option("subscribe", "stockdata")
     .load()
 
-df.printSchema();
+df.printSchema()
   //df.show(false)
   //org.apache.spark.sql.AnalysisException: Queries with streaming sources must be executed with writeStream.start();;
 
