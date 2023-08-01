@@ -49,8 +49,8 @@ object StockMarketAnalysis extends App{
   val dfanalysis1 = spark.sql(query1)
   dfanalysis1.show()
   val singlePartitionDataFrame1 = dfanalysis1.coalesce(1)
-  singlePartitionDataFrame1.write.mode("overwrite").format("csv").save(args(2))
-
+  //singlePartitionDataFrame1.write.mode("overwrite").format("csv").save(args(2))
+  dfanalysis1.repartition(numPartitions = 1).write.mode(SaveMode.Overwrite).saveAsTable("june.stockanalysis1")
   //2. Worst year & Best Year
 
   val query2 = "select headquarters, sub_industry, stock_start.company_name,round((((stock_end.closing - stock_start.opening)/stock_start.opening)*100),2) as growth_percent from (select t1.company_name,opening from stock_data sd, stock_table1 t1 where sd.trading_year=t1.min_year and sd.trading_month=t1.min_month and sd.company_name=t1.company_name) stock_start, (select t1.company_name, closing from stock_data sd, stock_table1 t1 where sd.trading_year=t1.max_year and sd.trading_month=t1.max_month and sd.company_name=t1.company_name) stock_end, (select company_name, headquarters, sub_industry from stock_data group by company_name,headquarters,sub_industry) sd where (stock_end.closing-stock_start.opening) > 0 and (stock_start.company_name = stock_end.company_name) and (sd.company_name=stock_start.company_name)"
@@ -62,13 +62,15 @@ object StockMarketAnalysis extends App{
   val query4 = "select x.sector,x.trading_year,x.growth from stock_table3 x,(select sector,min(growth) growth from stock_table3 group by sector) y where x.sector=y.sector and x.growth=y.growth order by x.growth"
   val dfanalysis2 = spark.sql(query4)
   dfanalysis2.show()
-  val singlePartitionDataFrame2 = dfanalysis2.coalesce(1)
-  singlePartitionDataFrame2.write.mode("overwrite").format("csv").save(args(3))
+ // val singlePartitionDataFrame2 = dfanalysis2.coalesce(1)
+  dfanalysis2.repartition(numPartitions = 1).write.mode(SaveMode.Overwrite).saveAsTable("june.stockanalysis2")
+  //singlePartitionDataFrame2.write.mode("overwrite").format("csv").save(args(3))
   val query5 = "select a.sector,a.trading_year,a.growth from stock_table3 a, (select sector,max(growth) growth from stock_table3 group by sector) b where a.sector=b.sector and a.growth=b.growth order by a.growth desc"
   val dfanalysis3 = spark.sql(query5)
   dfanalysis3.show()
   val singlePartitionDataFrame3 = dfanalysis3.coalesce(1)
-  singlePartitionDataFrame3.write.mode("overwrite").format("csv").save(args(4))
+  dfanalysis3.repartition(numPartitions = 1).write.mode(SaveMode.Overwrite).saveAsTable("june.stockanalysis3")
+  //singlePartitionDataFrame3.write.mode("overwrite").format("csv").save(args(4))
  // val plot = Vegas().withDataFrame(dfanalysis3).encodeX("trading_year + sector",Nominal).encodeY("growth",Quantitative).mark(Bar)
  // plot.show
   /* dfanalysis1.write
