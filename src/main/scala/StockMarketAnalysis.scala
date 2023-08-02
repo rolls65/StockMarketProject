@@ -70,10 +70,18 @@ object StockMarketAnalysis extends App{
   dfanalysis3.show()
   val singlePartitionDataFrame3 = dfanalysis3.coalesce(1)
   dfanalysis3.repartition(numPartitions = 1).write.mode(SaveMode.Overwrite).saveAsTable("june.stockanalysis3")
-  //singlePartitionDataFrame3.write.mode("overwrite").format("csv").save(args(4))
- // val plot = Vegas().withDataFrame(dfanalysis3).encodeX("trading_year + sector",Nominal).encodeY("growth",Quantitative).mark(Bar)
- // plot.show
-  /* dfanalysis1.write
+  /*singlePartitionDataFrame3.write.mode("overwrite").format("csv").save(args(4))
+  //visualization
+
+  val plot1 = Vegas().withDataFrame(dfanalysis1).encodeX("company_code", Nominal).encodeY("growth_percent", Quantitative).mark(Bar)
+  plot1.show
+  val plot2 = Vegas().withDataFrame(dfanalysis2).encodeX("sector", Nominal).encodeY("growth", Quantitative).mark(Bar)
+  plot2.show
+  val plot3 = Vegas().withDataFrame(dfanalysis3).encodeX("sector", Nominal).encodeY("growth", Quantitative).mark(Bar)
+  plot3.show
+
+  //write to mysql database
+   dfanalysis1.write
           .format("jdbc")
           .option("driver", "com.mysql.cj.jdbc.Driver")
           .option("url", "jdbc:mysql://localhost:3306/stockdb")
